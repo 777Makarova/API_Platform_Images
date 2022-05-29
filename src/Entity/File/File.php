@@ -2,17 +2,58 @@
 namespace App\Entity\File;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use App\Controller\File\FileController;
 use App\Entity\BaseEntity\BaseEntity;
 
+use App\Entity\Image\Image;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get' =>[
+        ],
+        'post'=>[
+            'deserialize' => false,
+            'controller' => FileController::class,
+            'openapi_context' =>[
+                'requestBody' =>[
+                    'description' => 'File Upload',
+                    'required' => true,
+                    'content'=>[
+                        'multipart/form-data'=>[
+                            'schema'=>[
+                                'type' => 'object',
+                                'properties' => [
+                                    'name' => [
+                                        'type' => 'string',
+                                        'description' => 'Write the file name'
+                                    ],
+                                    'file' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                        'description' => 'File to be uploaded. Only JPG!'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]
+
+    ],
+    iri: 'http://schema.org/ImageObject',
+    itemOperations: ['get', 'delete'],
+    normalizationContext: [Groups::class, 'read']
+)]
 
 #[ApiFilter(SearchFilter::class, properties: [
     'id' => 'exact',
@@ -21,21 +62,43 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(DateFilter::class, properties: ['dateCreate'])]
 #[ApiFilter(OrderFilter::class, properties:['id', 'dateCreate'])]
 
-class File extends BaseEntity
+class File
 {
 
-    #[ORM\Column (type: 'string')]
-    #[Assert\NotNull]
-    private string $name = '';
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     #[ORM\Column (type: 'string')]
     #[Assert\NotNull]
-    private string $path = '';
+    public string $name = '';
+
+    #[ORM\Column (type: 'string')]
+    #[ApiProperty (iri: 'http://schema.org/contentUrl')]
+    #[Groups('read')]
+    #[Assert\NotNull]
+    public ?string $filePath = null;
+
+
+    #[ORM\OneToMany(mappedBy: 'file_id', targetEntity: Image::class)]
+    private iterable $ImageFile;
+
+
 
     /**
-     * @return string|null
+     * @return int
      */
-    public function getName(): ?string
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
@@ -43,27 +106,17 @@ class File extends BaseEntity
     /**
      * @return string|null
      */
-    public function getPath(): ?string
+    public function getFilePath(): ?string
     {
-        return $this->path;
+        return $this->filePath;
     }
 
     /**
-     * @param string|null $name
+     * @return iterable
      */
-    public function setName(?string $name): void
+    public function getImageFile(): iterable
     {
-        $this->name = $name;
+        return $this->ImageFile;
     }
-
-    /**
-     * @param string|null $path
-     */
-    public function setPath(?string $path): void
-    {
-        $this->path = $path;
-    }
-
-
 }
 

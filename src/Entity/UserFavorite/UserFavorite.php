@@ -47,6 +47,7 @@ class UserFavorite extends BaseEntity {
         $this->user_id = $user_id;
     }
 
+
     /**
      * @return Image|null
      */
@@ -62,9 +63,6 @@ class UserFavorite extends BaseEntity {
     {
         $this->image_id = $image_id;
     }
-
-
-
 
 
 }

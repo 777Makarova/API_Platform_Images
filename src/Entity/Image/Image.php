@@ -8,6 +8,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\BaseEntity\BaseEntity;
+use App\Entity\File\File;
 use App\Entity\UserFavorite\UserFavorite;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -51,9 +52,8 @@ class Image extends BaseEntity
     #[ORM\Column (type: 'string')]
     public string $size = '';
 
-    // связать с id File
-    #[ORM\Column (type: 'integer')]
-    private ?int $file_id = null;
+    #[ORM\ManyToOne(targetEntity: File::class, inversedBy: 'ImageFile')]
+    private ?File $file_id = null;
 
     #[ORM\Column (type: 'integer')]
     private ?int $parent = null;
@@ -83,7 +83,6 @@ class Image extends BaseEntity
         $this->name = $name;
     }
 
-
     /**
      * @param string $size
      */
@@ -93,17 +92,17 @@ class Image extends BaseEntity
     }
 
     /**
-     * @return int|null
+     * @return File
      */
-    public function getFileId(): ?int
+    public function getFileId(): File
     {
         return $this->file_id;
     }
 
     /**
-     * @param int|null $file_id
+     * @param File|null $file_id
      */
-    public function setFileId(?int $file_id): void
+    public function setFileId(?File $file_id): void
     {
         $this->file_id = $file_id;
     }
@@ -125,16 +124,13 @@ class Image extends BaseEntity
     }
 
     /**
-     * @param int|null $parent
-     */
-
-    /**
      * @return int|null
      */
     public function getChild(): ?int
     {
         return $this->child;
     }
+
 
     /**
      * @param int|null $child
@@ -143,36 +139,5 @@ class Image extends BaseEntity
     {
         $this->child = $child;
     }
-//
-//    public function getParent(): ?int
-//    {
-//        return $this->parent;
-//    }
-//
-//    public function getChild(): ?int
-//    {
-//        return $this->child;
-//    }
-//
-//    public function setName(): self
-//    {
-//        return $this->name;
-//    }
-//
-//    public function setSize(): self
-//    {
-//        return $this->size;
-//    }
-//
-//    public function setParent(): ?int
-//    {
-//        return $this->parent;
-//    }
-//
-//    public function setChild(): ?int
-//    {
-//        return $this->parent;
-//    }
-
 
 }
