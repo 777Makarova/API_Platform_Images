@@ -29,22 +29,6 @@ class BaseEntity{
         return $this->id;
     }
 
-    /**
-     * @param DateTime $dateCreate
-     */
-    public function setDateCreate(DateTime $dateCreate): void
-    {
-        $this->dateCreate = $dateCreate;
-    }
-
-    /**
-     * @param DateTime $dateUpdate
-     */
-    public function setDateUpdate(DateTime $dateUpdate): void
-    {
-        $this->dateUpdate = $dateUpdate;
-    }
-
 
 
 

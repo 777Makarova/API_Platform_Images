@@ -21,6 +21,8 @@ final class FileController extends AbstractController{
         }
         $FileObject = new file();
         $FileObject-> name = $request->get('name');
+        $FileObject ->dateCreate = new \DateTime();
+        $FileObject ->dateUpdate = new \DateTime();
         $FileObject -> filePath = $fileUploader -> upload ($uploadedFile);
 
 

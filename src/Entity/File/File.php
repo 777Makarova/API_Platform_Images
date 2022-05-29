@@ -62,14 +62,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiFilter(DateFilter::class, properties: ['dateCreate'])]
 #[ApiFilter(OrderFilter::class, properties:['id', 'dateCreate'])]
 
-class File
+class File extends BaseEntity
 {
 
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    private ?int $id = null;
 
     #[ORM\Column (type: 'string')]
     #[Assert\NotNull]
@@ -84,16 +79,6 @@ class File
 
     #[ORM\OneToMany(mappedBy: 'file_id', targetEntity: Image::class)]
     private iterable $ImageFile;
-
-
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
     /**
      * @return string

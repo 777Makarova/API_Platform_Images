@@ -21,6 +21,7 @@
         "symfony/expression-language": "6.1.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.1.*",
+        "symfony/maker-bundle": "^1.43",
         "symfony/mime": "6.1.*",
         "symfony/property-access": "6.1.*",
         "symfony/property-info": "6.1.*",
@@ -83,8 +84,5 @@
             "allow-contrib": false,
             "require": "6.1.*"
         }
-    },
-    "require-dev": {
-        "symfony/maker-bundle": "^1.43"
     }
 }
