@@ -56,6 +56,7 @@ class UserFavorite extends BaseEntity {
         return $this->image_id;
     }
 
+
     /**
      * @param Image|null $image_id
      */
