@@ -18,13 +18,13 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private $email;
+    private mixed $username;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private array $roles = [];
 
     #[ORM\Column(type: 'string')]
-    private $password;
+    private string $password;
 
     #[ORM\OneToMany(mappedBy: 'client', targetEntity: ApiToken::class, orphanRemoval: true)]
     private $apiTokens;
@@ -39,17 +39,22 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    /**
+     * @return mixed
+     */
+    public function getUsername(): mixed
     {
-        return $this->email;
+        return $this->username;
     }
 
-    public function setEmail(string $email): self
+    /**
+     * @param mixed $username
+     */
+    public function setUsername(mixed $username): void
     {
-        $this->email = $email;
-
-        return $this;
+        $this->username = $username;
     }
+
 
     /**
      * A visual identifier that represents this user.
@@ -58,7 +63,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**
