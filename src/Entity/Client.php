@@ -34,7 +34,10 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
         $this->apiTokens = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
         return $this->id;
     }
@@ -54,8 +57,6 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->username = $username;
     }
-
-
     /**
      * A visual identifier that represents this user.
      *
@@ -86,6 +87,7 @@ class Client implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->roles = $roles;
     }
+
     /**
      * @see PasswordAuthenticatedUserInterface
      */

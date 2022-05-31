@@ -107,37 +107,4 @@ class Image extends BaseEntity
         $this->file_id = $file_id;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getParent(): ?int
-    {
-        return $this->parent;
-    }
-
-    /**
-     * @param int|null $parent
-     */
-    public function setParent(?int $parent): void
-    {
-        $this->parent = $parent;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getChild(): ?int
-    {
-        return $this->child;
-    }
-
-
-    /**
-     * @param int|null $child
-     */
-    public function setChild(?int $child): void
-    {
-        $this->child = $child;
-    }
-
 }

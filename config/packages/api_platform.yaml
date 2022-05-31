@@ -9,7 +9,7 @@ api_platform:
         versions: [3]
         api_keys:
             apiKey:
-                name: x-api-token
+                name: Authorization
                 type: header
     allow_plain_identifiers: true
 

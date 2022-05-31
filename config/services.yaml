@@ -39,7 +39,9 @@ services:
     App\Service\File\FileUploader:
         arguments:
             $uploadPath: '%uploads_directory%'
-
+    App\Service\File\FileResize:
+        arguments:
+            $uploadPath: '%uploads_directory%'
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
@@ -47,3 +49,8 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    App\Swagger\SwaggerDecorator:
+        decorates: 'api_platform.swagger.normalizer.documentation'
+        arguments: ['@App\Swagger\SwaggerDecorator.inner']
+        autoconfigure: false
