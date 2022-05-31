@@ -13,3 +13,6 @@ api_platform:
                 type: header
     allow_plain_identifiers: true
 
+#    defaults:
+#    pagination_items_per_page: 5
+

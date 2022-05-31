@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     collectionOperations: [
         'get' =>[
-            'pagination_items_per_page' => 5
+            'pagination_items_per_page' => 3
         ],
         'post' =>[
         ]
@@ -50,7 +50,7 @@ class Image extends BaseEntity
     public string $name = '';
 
     #[ORM\Column (type: 'string')]
-    public string $size = '';
+    private string $size = '';
 
     #[ORM\ManyToOne(targetEntity: File::class, inversedBy: 'ImageFile')]
     private ?File $file_id = null;
@@ -65,31 +65,6 @@ class Image extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'image_id', targetEntity: UserFavorite::class)]
     private iterable $imageFavorites;
 
-
-    /**
-     * @return iterable
-     */
-    public function getImageFavorites(): iterable
-    {
-        return $this->imageFavorites;
-    }
-
-
-    /**
-     * @param string $name
-     */
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @param string $size
-     */
-    public function setSize(string $size): void
-    {
-        $this->size = $size;
-    }
 
     /**
      * @return File

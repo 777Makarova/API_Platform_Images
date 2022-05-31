@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     collectionOperations: [
         'get' =>[
-            'pagination_items_per_page' => 5
+            'pagination_items_per_page' => 3
         ],
         'post' =>[
         ]

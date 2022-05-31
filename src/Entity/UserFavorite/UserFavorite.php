@@ -16,7 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 
 #[ApiFilter(SearchFilter::class, properties: [
-    'id' => 'exact',
+    'user_id' => 'exact',
+    'image_id' => 'exact',
     'dateCreate' => 'partial'
 ])]
 #[ApiFilter(DateFilter::class, properties: ['dateCreate'])]
